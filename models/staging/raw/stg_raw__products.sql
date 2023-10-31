@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('gz_raw_data', 'product') }}
+    select * from {{ source('raw', 'products') }}
 
 ),
 
@@ -10,7 +10,7 @@ renamed as (
 
     select
         products_id,
-        purchse_price AS purchase_price
+        purchse_price
 
     from source
 
