@@ -14,10 +14,10 @@ sources:
       - name: sales
         freshness:
           warn_after:
-            count: 6
+            count: 85
             period: hour
           error_after:
-            count: 2
+            count: 90
             period: day
         loaded_at_field: date_date
         identifier: raw_gz_sales
