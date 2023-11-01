@@ -1,27 +1,71 @@
 version: 2
+
 sources:
-  - name: gz_raw_data
-    tables: 
-      - name: product
+  - name: raw
+    schema: gz_raw_data
+    description: greenwez data
+    tables:
+      - name: products
         identifier: raw_gz_product
+        description: products list
         columns:
           - name: products_id
           - name: purchSE_PRICE
-
       - name: sales
+        freshness:
+          warn_after:
+            count: 6
+            period: hour
+          error_after:
+            count: 2
+            period: day
+        loaded_at_field: date_date
         identifier: raw_gz_sales
+        description: sales list
         columns:
+          - name: id
           - name: date_date
           - name: orders_id
           - name: pdt_id
           - name: revenue
+            description: revenue company per sale
           - name: quantity
-
       - name: ship
         identifier: raw_gz_ship
+        description: ship list
         columns:
           - name: orders_id
           - name: shipping_fee
           - name: shipping_fee_1
           - name: logCost
           - name: ship_cost
+models:
+  - name: stg_raw_products
+    columns:
+      - name: products_id
+        tests:
+          - unique
+          - not_null
+      - name: purchase_price
+  - name: stg_raw_sales
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+      - name: orders_id
+      - name: pdt_id
+      - name: revenue
+      - name: quantity
+
+  - name: stg_raw_ship
+    columns:
+      - name: orders_id
+        tests:
+          - unique
+          - not_null
+      - name: shipping_fee
+      - name: shipping_fee_1
+      - name: logCost
+      - name: ship_cost
