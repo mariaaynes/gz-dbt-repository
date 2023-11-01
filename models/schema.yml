@@ -39,6 +39,7 @@ sources:
           - name: shipping_fee_1
           - name: logCost
           - name: ship_cost
+          
 models:
   - name: stg_raw_products
     columns:
